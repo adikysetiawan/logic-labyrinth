@@ -1,61 +1,215 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Logic Labyrinth 🧩
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📋 About The Project
 
-## About Laravel
+Logic Labyrinth adalah sebuah game puzzle berbasis web yang dibangun dengan Laravel untuk mengajarkan konsep pemrograman dan logika. Pemain harus menganalisis kode perintah Python dan menggerakkan karakter macan di grid 5x5 untuk mencapai posisi target yang benar.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### ✨ Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Game Logic Puzzle**: Analisis kode Python dan gerakkan karakter sesuai instruksi
+- **Multi-level Difficulty**: Level mudah dan susah dengan kompleksitas berbeda
+- **Admin Panel**: Kelola level, pemain, dan statistik gameplay
+- **Level Generator**: Sistem seeder otomatis untuk menghasilkan level bervariasi
+- **Responsive Design**: Tampilan optimal di berbagai perangkat
+- **Real-time Gameplay**: Gerakan karakter dengan animasi smooth
+- **Statistics Tracking**: Lacak performa pemain dan tingkat keberhasilan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Teknologi yang Digunakan
 
-## Learning Laravel
+- **Framework**: Laravel 11.x
+- **Database**: MySQL
+- **Frontend**: Blade Templating, Tailwind CSS, Prism.js
+- **Autentikasi**: Laravel Breeze
+- **Game Logic**: JavaScript ES6+
+- **Styling**: Custom CSS dengan animasi
+- **Icons**: Custom SVG icons
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Panduan Instalasi
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Prasyarat
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL
+- Web Server (Apache/Nginx/Laragon)
 
-## Laravel Sponsors
+### Langkah-langkah Instalasi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clone repository
+   ```bash
+   git clone https://github.com/adikysetiawan/logic-labyrinth.git
+   cd logic-labyrinth
+   ```
 
-### Premium Partners
+2. Install dependensi PHP
+   ```bash
+   composer install
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. Install dependensi JavaScript
+   ```bash
+   npm install
+   ```
 
-## Contributing
+4. Salin file .env
+   ```bash
+   cp .env.example .env
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Generate key aplikasi
+   ```bash
+   php artisan key:generate
+   ```
 
-## Code of Conduct
+6. Konfigurasi database di file .env
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=logic_labyrinth
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7. Jalankan migrasi database
+   ```bash
+   php artisan migrate
+   ```
 
-## Security Vulnerabilities
+8. Generate level data (100 level: 50 mudah + 50 susah)
+   ```bash
+   php artisan db:seed --class=EasyLevelsSeeder
+   php artisan db:seed --class=HardLevelsSeeder
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+9. Buat symbolic link untuk penyimpanan
+   ```bash
+   php artisan storage:link
+   ```
 
-## License
+10. Compile aset frontend
+    ```bash
+    npm run build
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+11. Jalankan server development
+    ```bash
+    php artisan serve
+    ```
+
+12. Akses aplikasi di browser: `http://localhost:8000`
+
+## 🎮 Cara Bermain
+
+1. **Registrasi/Login**: Buat akun atau masuk dengan akun existing
+2. **Mulai Game**: Klik "Mulai Bermain" di halaman utama
+3. **Analisis Kode**: Baca kode Python yang ditampilkan di panel kanan
+4. **Gerakkan Karakter**: Gunakan tombol panah untuk menggerakkan macan
+5. **Capai Target**: Ikuti instruksi kode untuk mencapai posisi yang benar
+6. **Selesaikan Level**: Klik "Selesai" ketika yakin sudah di posisi target
+
+### Contoh Level Mudah:
+```python
+moveRight()
+if x % 2 == 0:
+    moveUp()
+else:
+    moveDown()
+for i in range(2):
+    moveLeft()
+```
+
+### Contoh Level Susah:
+```python
+while x < 4 and y > 0:
+    moveRight()
+    moveUp()
+if not (x % 2 == 0 and y % 2 == 1):
+    moveLeft()
+    moveDown()
+for i in range(3):
+    if x > 2 or y == 0:
+        moveRight()
+    else:
+        moveLeft()
+```
+
+## 👥 Akun Default Admin
+
+Untuk mengakses admin panel, gunakan akun berikut:
+
+- **Email**: admin@example.com
+- **Password**: password
+- **URL Admin**: `/admin/players`
+
+## 🎯 Fitur Detail
+
+### 1. Sistem Level
+- **Easy Levels**: 6 pola gerakan dengan if/else/loop/for sederhana
+- **Hard Levels**: 7 pola kompleks dengan while/nested/and/or/not
+- **Auto-generated**: 100 level unik dengan algoritma seeder
+- **Wrap Logic**: Gerakan melewati batas grid (wrapping)
+
+### 2. Admin Panel
+- **Data Pemain**: Kelola pemain dan statistik mereka
+- **Data Level**: CRUD level dengan filter dan pencarian
+- **Rekap Permainan**: Analisis performa dan tingkat keberhasilan
+- **Level Generator**: Buat level custom dengan start position dan target
+
+### 3. Game Engine
+- **Grid 5x5**: Koordinat X (0-4) horizontal, Y (0-4) vertikal
+- **Movement Logic**: moveUp mengurangi Y, moveDown menambah Y
+- **Code Highlighting**: Syntax highlighting dengan Prism.js
+- **Real-time Validation**: Cek posisi target secara real-time
+
+### 4. Pola Level yang Didukung
+
+#### Level Mudah:
+- For loops sederhana
+- If-else dengan 2 cabang
+- Nested if ringan
+- Kombinasi gerakan berurutan
+
+#### Level Susah:
+- While loops dengan kondisi kompleks
+- Nested for loops
+- Logical operators (and, or, not)
+- If-elif-else dengan multiple cabang
+- Triple nested conditions
+- Complex mathematical conditions
+
+## 🤝 Berkontribusi
+
+Kontribusi sangat diterima untuk membuat proyek ini lebih baik. Berikut cara berkontribusi:
+
+1. Fork proyek ini
+2. Buat branch fitur (`git checkout -b feature/namafitur`)
+3. Commit perubahan (`git commit -m 'Menambahkan fitur baru'`)
+4. Push ke branch (`git push origin feature/namafitur`)
+5. Buat Pull Request
+
+## 📝 Lisensi
+
+Dilisensikan di bawah [MIT License](LICENSE).
+
+## 👨‍💻 Penulis
+
+**Adiky Setiawan**  
+📧 Email: adikysetiawan@example.com  
+🔗 GitHub: [@adikysetiawan](https://github.com/adikysetiawan)  
+💼 LinkedIn: [Adiky Setiawan](https://linkedin.com/in/adikysetiawan)
+
+## 🙏 Acknowledgments
+
+- [Laravel](https://laravel.com/) - The PHP Framework for Web Artisans
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [Prism.js](https://prismjs.com/) - Lightweight, extensible syntax highlighter
+- [Heroicons](https://heroicons.com/) - Beautiful hand-crafted SVG icons
+
+---
+
+<div align="center">
+  <p>Dibuat dengan ❤️ menggunakan Laravel</p>
+  <p>© 2025 Logic Labyrinth. All rights reserved.</p>
+</div>
