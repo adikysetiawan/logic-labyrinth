@@ -35,22 +35,32 @@
                         <option value="hard">Susah</option>
                     </select>
                 </div>
-                <div class="grid grid-cols-4 gap-3">
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">X (0-4)</label>
-                        <input type="number" name="x" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
+                <!-- Start Position -->
+                <div class="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <div class="text-xs text-slate-400 mb-2">Posisi Awal (Start)</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Start X (0-4)</label>
+                            <input type="number" name="start_x" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Start Y (0-4)</label>
+                            <input type="number" name="start_y" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Y (0-4)</label>
-                        <input type="number" name="y" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Start X (0-4)</label>
-                        <input type="number" name="start_x" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">Start Y (0-4)</label>
-                        <input type="number" name="start_y" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
+                </div>
+                <!-- Correct Answer -->
+                <div class="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <div class="text-xs text-slate-400 mb-2">Jawaban Benar (Target)</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">X (0-4)</label>
+                            <input type="number" name="x" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Y (0-4)</label>
+                            <input type="number" name="y" min="0" max="4" class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2 focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500/70" />
+                        </div>
                     </div>
                 </div>
                 <div class="md:col-span-2 flex justify-end">
@@ -58,6 +68,37 @@
                 </div>
             </form>
         </div>
+
+        <!-- Filter Bar -->
+        <form method="GET" action="{{ route('admin.levels') }}" class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 shadow-[0_8px_28px_rgba(0,0,0,0.45)] mb-4 flex flex-wrap items-end gap-3">
+            <div>
+                <label class="block text-xs text-slate-400 mb-1">Cari Kode</label>
+                <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="cari di kode perintah" class="rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2" />
+            </div>
+            <div>
+                <label class="block text-xs text-slate-400 mb-1">Kesulitan</label>
+                <select name="difficulty" class="rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2">
+                    <option value="" @selected(($difficulty ?? '')==='')>Semua</option>
+                    <option value="easy" @selected(($difficulty ?? '')==='easy')>Mudah</option>
+                    <option value="hard" @selected(($difficulty ?? '')==='hard')>Susah</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs text-slate-400 mb-1">Urutkan</label>
+                <select name="sort" class="rounded-xl bg-slate-950/70 border border-slate-700 text-slate-100 px-3 py-2">
+                    <option value="-created_at" @selected(($sort ?? '-created_at')==='-created_at')>Terbaru</option>
+                    <option value="created_at" @selected(($sort ?? '')==='created_at')>Terlama</option>
+                    <option value="difficulty" @selected(($sort ?? '')==='difficulty')>Kesulitan (A-Z)</option>
+                    <option value="-difficulty" @selected(($sort ?? '')==='-difficulty')>Kesulitan (Z-A)</option>
+                </select>
+            </div>
+            <div class="ml-auto flex items-center gap-3">
+                <button class="btn-ll px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700">Terapkan</button>
+                @if(($q ?? '') !== '' || ($difficulty ?? '') !== '' || ($sort ?? '-created_at') !== '-created_at')
+                    <a href="{{ route('admin.levels') }}" class="px-4 py-2.5 rounded-xl border border-slate-700 text-slate-200 hover:bg-white/5">Reset</a>
+                @endif
+            </div>
+        </form>
 
         <!-- Levels Table Card -->
         <div class="rounded-2xl border border-slate-800 bg-slate-900/60 shadow-[0_8px_28px_rgba(0,0,0,0.45)] overflow-hidden">

@@ -85,10 +85,40 @@ class AdminController extends Controller
         return view('admin.players', compact('players', 'q'));
     }
 
-    public function levels()
+    public function levels(Request $request)
     {
-        $levels = Level::latest()->paginate(20);
-        return view('admin.levels', compact('levels'));
+        $q = trim((string) $request->get('q', ''));
+        $difficulty = (string) $request->get('difficulty', '');
+        $sort = (string) $request->get('sort', '-created_at');
+
+        $query = Level::query();
+        if ($difficulty !== '') {
+            $query->where('difficulty', $difficulty);
+        }
+        if ($q !== '') {
+            $query->where('code', 'like', "%$q%");
+        }
+        // sorting options: -created_at (latest), created_at (oldest), difficulty, -difficulty
+        switch ($sort) {
+            case 'created_at':
+                $query->orderBy('created_at');
+                break;
+            case 'difficulty':
+                $query->orderBy('difficulty');
+                $query->orderByDesc('id');
+                break;
+            case '-difficulty':
+                $query->orderByDesc('difficulty');
+                $query->orderByDesc('id');
+                break;
+            case '-created_at':
+            default:
+                $query->latest('id');
+                break;
+        }
+
+        $levels = $query->paginate(20)->withQueryString();
+        return view('admin.levels', compact('levels', 'q', 'difficulty', 'sort'));
     }
 
     // FORM actions for Levels (admin-only)
